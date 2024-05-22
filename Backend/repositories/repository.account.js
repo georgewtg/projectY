@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
+const crypto = require("crypto");
 
 const pool = new Pool({
     user: process.env.DB_USER,
@@ -18,11 +19,24 @@ pool.connect().then(() => {
 async function registerAccount(req, res) {
     const {username, email, password} = req.body
 
+
+    // hashing
+    generatedPassword = null;
+    try {
+        const hash = crypto.createHash('md5');
+        hash.update(password);
+        generatedPassword = hash.digest('hex');
+    } catch (error) {
+        console.log("failed to hash password");
+    }
+
+
+    // Post Account to Database
     try {
         const result = await pool.query(
             `INSERT INTO accounts (username, email, password)
             VALUES ($1, $2, $3) RETURNING *`,
-            [username, email, password]
+            [username, email, generatedPassword]
         );
         const newAccount = result.rows[0];
         res.status(201).json({
@@ -35,14 +49,41 @@ async function registerAccount(req, res) {
     }
 }
 
-async function loginAccount(req, res) {}
+async function loginAccount(req, res) {
+    const {email, password} = req.body
 
-async function getStatus(req, res) {
-    res.status(200).json({ status: 'Server is running' });
+
+    // hashing
+    generatedPassword = null;
+    try {
+        const hash = crypto.createHash('md5');
+        hash.update(password);
+        generatedPassword = hash.digest('hex');
+    } catch (error) {
+        console.log("failed to hash password");
+    }
+
+
+    // Search Account in Database
+    try {
+        const result = await pool.query(
+            `SELECT * FROM accounts
+            WHERE email = $1
+            AND password = $2`,
+            [email, generatedPassword]
+        );
+        const loggedAccount = result.rows[0];
+        res.status(201).json({
+            success: true,
+            message: "successfully logged in",
+            payload: loggedAccount,
+        });
+    } catch (error) {
+        res.status(500).json({error: "Internal Server Error"});
+    }
 }
 
 module.exports = {
     registerAccount,
     loginAccount,
-    getStatus,
 };

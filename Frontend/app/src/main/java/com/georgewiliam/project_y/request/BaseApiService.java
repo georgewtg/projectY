@@ -14,6 +14,9 @@ public interface BaseApiService {
     @POST("/register")
     Call<BaseResponse<Account>> register (@Body Account account);
 
+    @POST("login")
+    Call<BaseResponse<Account>> login (@Body Account account);
+
     @GET("/status")
     Call<StatusResponse> getStatus();
 }

@@ -13,7 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //Endpoint
-app.get('/status', accountRepo.getStatus);
+app.get('/status', (req, res) => {
+    res.status(200).json({ status: 'Server is running' });
+});
 app.post('/register', accountRepo.registerAccount);
 app.post('/login', accountRepo.loginAccount);
 
