@@ -16,7 +16,6 @@
         android:text="Y"
         android:textAlignment="center"
         android:textSize="60sp"
-        android:theme="@style/Theme.JBusandroid"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
