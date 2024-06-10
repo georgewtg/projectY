@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.georgewiliam.project_y.model.Account;
 import com.georgewiliam.project_y.model.BaseResponse;
-import com.georgewiliam.project_y.model.StatusResponse;
 import com.georgewiliam.project_y.request.BaseApiService;
 import com.georgewiliam.project_y.request.UtilsApi;
 
@@ -67,16 +66,19 @@ public class LoginActivity extends AppCompatActivity {
                 BaseResponse<Account> res = response.body();
                 loggedAccount = res.payload;
 
-                if (res.success) {
+                if (loggedAccount != null) {
                     finish();
                     moveActivity(mContext, MainActivity.class);
+                    Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, "Incorrect email or password", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onFailure(Call<BaseResponse<Account>> call, Throwable t) {
-
+                Toast.makeText(mContext, "Problem with server", Toast.LENGTH_SHORT).show();
             }
         });
     }

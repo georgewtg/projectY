@@ -56,8 +56,11 @@ async function getPostByUser(req, res) {
 
     try {
         const result = await pool.query(
-            `SELECT * FROM posts
-            WHERE user_id = $1`,
+            `SELECT posts.post_id, posts.user_id, post_img_id, post_time, username, email, profile_img_id
+            FROM posts INNER JOIN accounts
+            ON posts.user_id = accounts.user_id
+            WHERE posts.user_id = $1
+            ORDER BY post_time DESC`,
             [user_id]
         );
         const posts = result.rows;
@@ -94,10 +97,11 @@ async function getPostById(req, res) {
 async function getTopPosts(req, res) {
     try {
         const result = await pool.query(
-            `SELECT posts.post_id, posts.user_id, post_img_id, post_time, COUNT(like_id) AS likes
+            `SELECT posts.post_id, posts.user_id, post_img_id, post_time, COUNT(like_id) AS likes, username, email, profile_img_id
             FROM posts
             INNER JOIN likes ON posts.post_id = likes.post_id
-            GROUP BY posts.post_id, posts.user_id, post_img_id, post_time
+            INNER JOIN accounts ON posts.user_id = accounts.user_id
+            GROUP BY posts.post_id, posts.user_id, post_img_id, post_time, username, email, profile_img_id
             ORDER BY likes DESC`
         );
         const topPosts = result.rows;
@@ -114,7 +118,9 @@ async function getTopPosts(req, res) {
 async function getRecentPosts(req, res) {
     try {
         const result = await pool.query(
-            `SELECT * FROM posts
+            `SELECT posts.post_id, posts.user_id, post_img_id, post_time, username, email, profile_img_id
+            FROM posts INNER JOIN accounts
+            ON posts.user_id = accounts.user_id
             ORDER BY post_time DESC`
         );
         const recentPosts = result.rows;

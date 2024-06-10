@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/add_post"
+        android:icon="@drawable/baseline_add_circle_outline_24"
+        android:title="Add Post"
+        app:showAsAction="collapseActionView|always"/>
+
+    <item android:id="@+id/latest_posts"
+        android:icon="@drawable/baseline_view_headline_24"
+        android:title="Latest Posts"
+        app:showAsAction="collapseActionView|always"/>
+
+    <item android:id="@+id/top_posts"
+        android:icon="@drawable/baseline_whatshot_24"
+        android:title="Top Posts"
+        app:showAsAction="collapseActionView|always"/>
+
+    <item android:id="@+id/about_me"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="About Me"
+        app:showAsAction="collapseActionView|always"/>
+</menu>

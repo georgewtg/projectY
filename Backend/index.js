@@ -39,13 +39,14 @@ app.post('/register', accountRepo.registerAccount);
 app.post('/login', accountRepo.loginAccount);
 app.put('/editAccount', accountRepo.editAccount);
 app.get('/getAccounts', accountRepo.getAccounts);
+app.post('/getAccountById', accountRepo.getAccountById);
 app.delete('/deleteAccount', accountRepo.deleteAccount);
 
 // Post
 app.post('/addPost', postRepo.addPost);
 app.get('/getAllPosts', postRepo.getAllPosts);
-app.get('/getPostById', postRepo.getPostById);
-app.get('/getPostByUser', postRepo.getPostByUser);
+app.post('/getPostById', postRepo.getPostById);
+app.post('/getPostByUser', postRepo.getPostByUser);
 app.get('/getTopPosts', postRepo.getTopPosts);
 app.get('/getRecentPosts', postRepo.getRecentPosts);
 app.delete('/deletePost', postRepo.deletePost);
@@ -54,8 +55,8 @@ app.delete('/deletePost', postRepo.deletePost);
 app.post('/addComment', commentRepo.addComment);
 app.put('/editComment', commentRepo.editComment);
 app.get('/getAllComments', commentRepo.getAllComments);
-app.get('/getCommentByPost', commentRepo.getCommentByPost);
-app.get('/getCommentByUser', commentRepo.getCommentByUser);
+app.post('/getCommentByPost', commentRepo.getCommentByPost);
+app.post('/getCommentByUser', commentRepo.getCommentByUser);
 app.get('/getCommentById', commentRepo.getCommentById);
 app.delete('/deleteComment', commentRepo.deleteComment);
 
@@ -63,15 +64,15 @@ app.delete('/deleteComment', commentRepo.deleteComment);
 app.post('/addLike', likeRepo.addLike);
 app.get('/getAllLikes', likeRepo.getAllLikes);
 app.get('/getLikeByPost', likeRepo.getLikeByPost);
-app.get('/getLikeByUser', likeRepo.getLikeByUser);
-app.get('/getLikeById', likeRepo.getLikeById);
+app.post('/getLikeByUser', likeRepo.getLikeByUser);
+app.post('/getLikeById', likeRepo.getLikeById);
 app.delete('/deleteLike', likeRepo.deleteLike);
 
 // Following
 app.post('/addFollowing', followingRepo.addFollowing);
 app.get('/getAllFollowings', followingRepo.getAllFollowings);
-app.get('/getFollowers', followingRepo.getFollowers);
-app.get('/getFolloweds', followingRepo.getFolloweds);
+app.post('/getFollowers', followingRepo.getFollowers);
+app.post('/getFolloweds', followingRepo.getFolloweds);
 app.delete('/deleteFollowing', followingRepo.deleteFollowing);
 
 // Google

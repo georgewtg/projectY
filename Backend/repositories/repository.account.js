@@ -99,6 +99,26 @@ async function getAccounts(req, res) {
     }
 }
 
+async function getAccountById(req, res) {
+    const {user_id} = req.body;
+
+    try {
+        const result = await pool.query(
+            `SELECT * FROM accounts
+            WHERE user_id = $1`,
+            [user_id]
+        );
+        const account = result.rows[0];
+        res.status(201).json({
+            success: true,
+            message: "Account found",
+            payload: account,
+        });
+    } catch (error) {
+        res.status(500).json({error: "Internal Server Error"});
+    }
+}
+
 async function editAccount(req, res) {
     const {user_id, username, email, password, profile_img_id} = req.body
 
@@ -158,6 +178,7 @@ module.exports = {
     registerAccount,
     loginAccount,
     getAccounts,
+    getAccountById,
     editAccount,
     deleteAccount,
 };

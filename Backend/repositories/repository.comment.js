@@ -79,7 +79,9 @@ async function getCommentByPost(req, res) {
 
     try {
         const result = await pool.query(
-            `SELECT * FROM comments
+            `SELECT comment_id, comments.user_id, comment, is_edited, username, email, profile_img_id
+            FROM comments INNER JOIN accounts
+            ON comments.user_id = accounts.user_id
             WHERE post_id = $1`,
             [post_id]
         );

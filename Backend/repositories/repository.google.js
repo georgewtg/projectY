@@ -26,7 +26,7 @@ const drive = google.drive({
 
 async function uploadProfile(req, res) {
     const file = req.file;
-    console.log(req.file);
+    console.log(file);
     const directory = path.resolve(__dirname, '..');
     const filePath = path.join(`${directory}/uploads`, file.filename);
 
@@ -43,7 +43,7 @@ async function uploadProfile(req, res) {
             },
         });
         fs.unlinkSync(filePath); // delete temp file in server
-        res.status(201).send(result.data);
+        res.status(201).json(result.data.id);
         return result.data;
     } catch (error) {
         res.status(500).send({error: "Internal Server Error"});
@@ -69,7 +69,7 @@ async function uploadPost(req, res) {
             },
         });
         fs.unlinkSync(filePath); // delete temp file in server
-        res.status(201).send(result.data);
+        res.status(201).json(result.data.id);
         return result.data;
     } catch (error) {
         res.status(500).send({error: "Internal Server Error"});
@@ -83,7 +83,7 @@ async function deleteFile(req, res) {
         const result = await drive.files.delete({
             fileId: fileId,
         });
-        res.status(201).send(result.data);
+        res.status(201).send({msg: "file deleted"});
     } catch (error) {
         res.status(500).send({error: "Internal Server Error"});
     }
